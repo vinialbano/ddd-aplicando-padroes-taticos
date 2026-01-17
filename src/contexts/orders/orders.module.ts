@@ -1,10 +1,20 @@
 import { Module } from '@nestjs/common';
+import { CartService } from './application/cart.service';
 import { OrdersService } from './application/orders.service';
+import { CartController } from './infrastructure/controllers/cart.controller';
+import { InMemoryShoppingCartRepository } from './infrastructure/database/in-memory-shopping-cart.repository';
 import { OrdersController } from './infrastructure/orders.controller';
+import { SHOPPING_CART_REPOSITORY } from './orders.tokens';
 
 @Module({
-  imports: [],
-  controllers: [OrdersController],
-  providers: [OrdersService],
+  controllers: [CartController, OrdersController],
+  providers: [
+    OrdersService,
+    CartService,
+    {
+      provide: SHOPPING_CART_REPOSITORY,
+      useClass: InMemoryShoppingCartRepository,
+    },
+  ],
 })
 export class OrdersModule {}
