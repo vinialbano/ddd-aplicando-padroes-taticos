@@ -17,7 +17,10 @@ import { ShippingAddress } from './shipping-address';
 export class CheckoutService {
   constructor(private readonly pricingGateway: PricingGateway) {}
 
-  createOrderFromCart(cart: ShoppingCart, shippingAddress: ShippingAddress) {
+  async createOrderFromCart(
+    cart: ShoppingCart,
+    shippingAddress: ShippingAddress,
+  ): Promise<Order> {
     if (cart.isEmpty()) {
       throw new Error('Cannot convert an empty cart to an order');
     }
@@ -27,17 +30,19 @@ export class CheckoutService {
       );
     }
 
-    const items = cart.getItems().map((cartItem) => {
-      const unitPrice = this.pricingGateway.getProductPrice(
-        cartItem.getProductId(),
-      );
-      const discount = this.pricingGateway.getProductDiscount(
-        cartItem.getProductId(),
-        cart.getCustomerId(),
-        cartItem.getQuantity(),
-      );
-      return { cartItem, unitPrice, discount };
-    });
+    const items = await Promise.all(
+      cart.getItems().map(async (cartItem) => {
+        const unitPrice = await this.pricingGateway.getProductPrice(
+          cartItem.getProductId(),
+        );
+        const discount = await this.pricingGateway.getProductDiscount(
+          cartItem.getProductId(),
+          cart.getCustomerId(),
+          cartItem.getQuantity(),
+        );
+        return { cartItem, unitPrice, discount };
+      }),
+    );
 
     const order = Order.create({
       cartId: cart.getCartId(),
@@ -48,7 +53,7 @@ export class CheckoutService {
     });
 
     const orderTotal = order.totalAmount;
-    const globalDiscount = this.pricingGateway.getOrderDiscount(
+    const globalDiscount = await this.pricingGateway.getOrderDiscount(
       cart.getCustomerId(),
       orderTotal,
     );

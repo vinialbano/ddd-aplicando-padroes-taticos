@@ -4,13 +4,13 @@ import { ProductId } from '../shared/product-id';
 import { Quantity } from '../shared/quantity';
 
 export interface PricingGateway {
-  getProductPrice(productId: ProductId): Money;
+  getProductPrice(productId: ProductId): Promise<Money>;
 
   getProductDiscount(
     productId: ProductId,
     customerId: CustomerId,
     quantity: Quantity,
-  ): Money;
+  ): Promise<Money>;
 
-  getOrderDiscount(customerId: CustomerId, orderTotal: Money): Money;
+  getOrderDiscount(customerId: CustomerId, orderTotal: Money): Promise<Money>;
 }
