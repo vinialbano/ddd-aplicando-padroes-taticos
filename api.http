@@ -1,8 +1,4 @@
 
-GET http://localhost:3000/orders
-
-###
-
 # Create a new cart
 # @name createCart
 POST http://localhost:3000/carts
@@ -20,8 +16,18 @@ POST http://localhost:3000/carts/{{cartId}}/items
 Content-Type: application/json
 
 {
+  "productId": "product-123",
+  "quantity": 5
+}
+
+###
+# Add item 2 to cart
+POST http://localhost:3000/carts/{{cartId}}/items
+Content-Type: application/json
+
+{
   "productId": "product-456",
-  "quantity": 2
+  "quantity": 4
 }
 
 ###
@@ -32,3 +38,18 @@ GET http://localhost:3000/carts/{{cartId}}
 ###
 # Get non-existing cart
 GET http://localhost:3000/carts/00000000-0000-0000-0000-000000000000
+
+###
+# Checkout cart
+POST http://localhost:3000/carts/{{cartId}}/checkout
+Content-Type: application/json
+
+{
+  "shippingAddress": {
+    "street": "123 Main St",
+    "city": "Anytown",
+    "stateOrProvince": "CA",
+    "postalCode": "12345",
+    "country": "USA"
+  }
+}
