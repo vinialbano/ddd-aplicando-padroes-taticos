@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { ShoppingCart } from '../../domain/shopping-cart';
-import { ShoppingCartRepository } from '../../domain/shopping-cart.repository';
-import { CartId } from '../../domain/value-objects/cart-id';
-import { CustomerId } from '../../domain/value-objects/customer-id';
+import { CustomerId } from '../../domain/shared/customer-id';
+import { CartId } from '../../domain/shopping-cart/cart-id';
+import { ShoppingCart } from '../../domain/shopping-cart/shopping-cart';
+import { ShoppingCartRepository } from '../../domain/shopping-cart/shopping-cart.repository';
 
 @Injectable()
 export class InMemoryShoppingCartRepository implements ShoppingCartRepository {

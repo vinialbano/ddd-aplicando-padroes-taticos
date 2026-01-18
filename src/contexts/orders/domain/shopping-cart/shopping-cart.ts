@@ -1,9 +1,9 @@
+import { CustomerId } from '../shared/customer-id';
+import { ProductId } from '../shared/product-id';
+import { Quantity } from '../shared/quantity';
+import { CartId } from './cart-id';
 import { CartItem, CartItemJSON } from './cart-item';
-import { CartId } from './value-objects/cart-id';
-import { CartStatus } from './value-objects/cart-status';
-import { CustomerId } from './value-objects/customer-id';
-import { ProductId } from './value-objects/product-id';
-import { Quantity } from './value-objects/quantity';
+import { CartStatus } from './cart-status';
 
 type ShoppingCartParams = {
   cartId: CartId;

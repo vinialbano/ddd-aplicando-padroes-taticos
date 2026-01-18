@@ -1,10 +1,10 @@
+import { CustomerId } from '../../shared/customer-id';
+import { ProductId } from '../../shared/product-id';
+import { Quantity } from '../../shared/quantity';
+import { CartId } from '../cart-id';
 import { CartItem } from '../cart-item';
+import { CartStatus } from '../cart-status';
 import { ShoppingCart } from '../shopping-cart';
-import { CartId } from '../value-objects/cart-id';
-import { CartStatus } from '../value-objects/cart-status';
-import { CustomerId } from '../value-objects/customer-id';
-import { ProductId } from '../value-objects/product-id';
-import { Quantity } from '../value-objects/quantity';
 
 describe('ShoppingCart', () => {
   describe('create', () => {
