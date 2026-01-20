@@ -41,6 +41,7 @@ GET http://localhost:3000/carts/00000000-0000-0000-0000-000000000000
 
 ###
 # Checkout cart
+# @name checkout
 POST http://localhost:3000/carts/{{cartId}}/checkout
 Content-Type: application/json
 
@@ -52,4 +53,15 @@ Content-Type: application/json
     "postalCode": "12345",
     "country": "USA"
   }
+}
+
+###
+@orderId = {{checkout.response.body.orderId}}
+POST http://localhost:3000/payments
+Content-Type: application/json
+
+{
+  "orderId": "{{orderId}}",
+  "amount": 10000,
+  "currency": "USD"
 }
