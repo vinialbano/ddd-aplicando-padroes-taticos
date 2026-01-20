@@ -1,6 +1,7 @@
 import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { CheckoutService } from '../domain/order/checkout.service';
 import { Order } from '../domain/order/order';
+import { OrderId } from '../domain/order/order-id';
 import type { OrderRepository } from '../domain/order/order.repository';
 import { ShippingAddress } from '../domain/order/shipping-address';
 import { CartId } from '../domain/shopping-cart/cart-id';
@@ -8,6 +9,8 @@ import type { ShoppingCartRepository } from '../domain/shopping-cart/shopping-ca
 import { ORDER_REPOSITORY, SHOPPING_CART_REPOSITORY } from '../orders.tokens';
 import { CartIdDto } from './dtos/cart-id.dto';
 import { CheckoutDTO } from './dtos/checkout.dto';
+import { MarkOrderAsPaidDTO } from './dtos/mark-order-as-paid.dto';
+import { OrderIdDto } from './dtos/order-id.dto';
 import { OrderResponseDTO } from './dtos/order-response.dto';
 
 @Injectable()
@@ -20,7 +23,29 @@ export class OrderService {
     private readonly checkoutService: CheckoutService,
   ) {}
 
-  async markOrderAsPaid(dto: any) {}
+  async markOrderAsPaid(dto: MarkOrderAsPaidDTO) {
+    const orderId = OrderId.fromString(dto.orderId);
+
+    const order = await this.orderRepository.findById(orderId);
+
+    if (!order) {
+      throw new NotFoundException(`Order ${dto.orderId} not found`);
+    }
+
+    order.markAsPaid(dto.paymentId);
+    await this.orderRepository.save(order);
+  }
+
+  async getOrder(orderIdDto: OrderIdDto): Promise<OrderResponseDTO> {
+    const orderId = OrderId.fromString(orderIdDto.orderId);
+    const order = await this.orderRepository.findById(orderId);
+
+    if (!order) {
+      throw new NotFoundException(`Order ${orderId.getValue()} not found`);
+    }
+
+    return this.mapToDto(order);
+  }
 
   async checkoutCart(
     cartIdDto: CartIdDto,
