@@ -20,6 +20,8 @@ export class OrderService {
     private readonly checkoutService: CheckoutService,
   ) {}
 
+  async markOrderAsPaid(dto: any) {}
+
   async checkoutCart(
     cartIdDto: CartIdDto,
     checkoutDto: CheckoutDTO,

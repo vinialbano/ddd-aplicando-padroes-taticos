@@ -39,5 +39,6 @@ import {
       inject: [PRICING_GATEWAY],
     },
   ],
+  exports: [OrderService],
 })
 export class OrdersModule {}
