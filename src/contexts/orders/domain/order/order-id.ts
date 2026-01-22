@@ -1,4 +1,4 @@
-import { UuidId } from '../shared/uuid-id.base';
+import { UuidId } from '../../../shared/value-objects/uuid-id.base';
 
 export class OrderId extends UuidId {
   constructor(value: string) {

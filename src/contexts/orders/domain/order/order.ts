@@ -1,4 +1,4 @@
-import { Money } from '../../../shared/money';
+import { Money } from '../../../shared/value-objects/money';
 import { CustomerId } from '../shared/customer-id';
 import { CartId } from '../shopping-cart/cart-id';
 import { CartItem } from '../shopping-cart/cart-item';

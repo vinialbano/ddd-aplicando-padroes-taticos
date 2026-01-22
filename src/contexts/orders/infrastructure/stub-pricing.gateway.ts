@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Money } from '../../shared/money';
+import { Money } from '../../shared/value-objects/money';
 import { PricingGateway } from '../domain/order/pricing.gateway';
 import { CustomerId } from '../domain/shared/customer-id';
 import { ProductId } from '../domain/shared/product-id';

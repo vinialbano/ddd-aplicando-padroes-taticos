@@ -1,4 +1,4 @@
-import { Money } from '../../../shared/money';
+import { Money } from '../../../shared/value-objects/money';
 import { CustomerId } from '../shared/customer-id';
 import { ProductId } from '../shared/product-id';
 import { Quantity } from '../shared/quantity';

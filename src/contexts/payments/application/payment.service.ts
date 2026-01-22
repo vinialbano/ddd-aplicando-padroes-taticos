@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { Money } from 'src/contexts/shared/money';
 import { OrdersPaymentsKernel } from 'src/contexts/shared/orders-payments.kernel';
+import { Money } from 'src/contexts/shared/value-objects/money';
 import { ProcessPaymentDto } from './process-payment.dto';
 
 export type PaymentResult =
