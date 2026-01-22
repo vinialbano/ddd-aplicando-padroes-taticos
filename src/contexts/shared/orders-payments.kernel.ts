@@ -11,6 +11,27 @@ type NotifyOrderPaidRequest = {
   timestamp: string;
 };
 
+export interface OrderPlacedPayload {
+  orderId: string;
+  customerId: string;
+  cartId: string;
+  items: Array<{
+    productId: string;
+    quantity: number;
+    unitPrice: number;
+  }>;
+  totalAmount: number;
+  currency: string;
+  shippingAddress: {
+    street: string;
+    city: string;
+    state: string;
+    zipCode: string;
+    country: string;
+  };
+  timestamp: string;
+}
+
 /**
  * Shared Kernel
  */

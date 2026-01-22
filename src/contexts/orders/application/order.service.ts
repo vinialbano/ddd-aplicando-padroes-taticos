@@ -1,4 +1,5 @@
 import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import type { DomainEventPublisher } from '../../shared/events/domain-event.publisher';
 import { CheckoutService } from '../domain/order/checkout.service';
 import { Order } from '../domain/order/order';
 import { OrderId } from '../domain/order/order-id';
@@ -21,6 +22,7 @@ export class OrderService {
     @Inject(ORDER_REPOSITORY)
     private readonly orderRepository: OrderRepository,
     private readonly checkoutService: CheckoutService,
+    private readonly eventPublisher: DomainEventPublisher,
   ) {}
 
   async markOrderAsPaid(dto: MarkOrderAsPaidDTO) {
@@ -68,6 +70,10 @@ export class OrderService {
     cart.markAsConverted();
 
     await this.cartRepository.save(cart);
+
+    await this.eventPublisher.publishDomainEvents([...order.getDomainEvents()]);
+    order.clearDomainEvents();
+
     await this.orderRepository.save(order);
 
     return this.mapToDto(order);
