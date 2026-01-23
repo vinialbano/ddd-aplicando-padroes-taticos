@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import { OrdersPaymentsKernel } from 'src/contexts/shared/orders-payments.kernel';
 import { Money } from 'src/contexts/shared/value-objects/money';
 import { ProcessPaymentDto } from './process-payment.dto';
 
@@ -9,8 +8,6 @@ export type PaymentResult =
 
 @Injectable()
 export class PaymentService {
-  constructor(private readonly ordersPaymentsKernel: OrdersPaymentsKernel) {}
-
   async processPayment(dto: ProcessPaymentDto): Promise<PaymentResult> {
     const orderId = dto.orderId;
     const amount = new Money(dto.amount, dto.currency);
@@ -21,12 +18,6 @@ export class PaymentService {
     }
 
     const paymentId = this.generatePaymentId(orderId);
-
-    await this.ordersPaymentsKernel.notifyOrderPaid({
-      orderId,
-      paymentId,
-      timestamp: new Date().getTime().toString(),
-    });
 
     return Promise.resolve({ success: true, paymentId });
   }

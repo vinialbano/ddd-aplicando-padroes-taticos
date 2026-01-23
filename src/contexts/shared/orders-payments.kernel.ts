@@ -32,6 +32,14 @@ export interface OrderPlacedPayload {
   timestamp: string;
 }
 
+export interface PaymentApprovedPayload {
+  orderId: string;
+  paymentId: string;
+  approvedAmount: number;
+  currency: string;
+  timestamp: string;
+}
+
 /**
  * Shared Kernel
  */
